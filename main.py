@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from PIL import Image
 import os
+import datetime
 
 #
 # pip install Pillow
@@ -16,7 +17,8 @@ def extract_metadata(image_path):
             "mode": img.mode,
             "size": img.size,
             "info": {key: str(value) for key, value in img.info.items()},  # Convertendo valores de info para strings
-            "peso": os.path.getsize(image_path) # tamanho da imagem com bytes
+            "peso": os.path.getsize(image_path), # tamanho da imagem com bytes
+            "criado em": datetime.datetime.fromtimestamp(os.path.getctime(image_path)).strftime('%Y-%m-%d %H:%M:%S') # Tempo de criação
         }
     return metadata
 
